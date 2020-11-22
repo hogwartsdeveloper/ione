@@ -403,6 +403,6 @@ class InstagramBot():
 
 my_bot = InstagramBot(username, password)
 my_bot.login()
-my_bot.send_direct_message("sultanmaksat__", "Мены Жаннур жазасады")
-#my_bot.get_all_followers("https://www.instagram.com/kalamkass_b/")
-#my_bot.download_userpage_content("https://www.instagram.com/erasyl_05__/")
+#my_bot.send_direct_message("bagnurl_l", "dota2")
+#my_bot.get_all_followers("https://www.instagram.com/aydynkyzy_kerim/")
+#my_bot.download_userpage_content("https://www.instagram.com/aydynkyzy_kerim/")
