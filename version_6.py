@@ -1,6 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from auth_data import username, password
+from direct_users import direct_users_list
 import time
 import random
 from selenium.common.exceptions import NoSuchElementException
@@ -13,7 +14,7 @@ class InstagramBot():
 
         self.username = username
         self.password = password
-        self.browser = webdriver.Chrome('chromedriver')
+        self.browser = webdriver.Chrome('chromedriver.exe')
     
     def close_browser(self):
 
@@ -357,7 +358,7 @@ class InstagramBot():
 
         self.close_browser()
     # метод для отправки сообщений в директ
-    def send_direct_message(self, username="", message=""):
+    def send_direct_message(self, usernames="", message="", img_path=''):
 
         browser = self.browser
         time.sleep(random.randrange(2, 4))
@@ -380,29 +381,42 @@ class InstagramBot():
         send_message_button = browser.find_element_by_xpath("/html/body/div[1]/section/div/div[2]/div/div/div[2]/div/button").click()
         time.sleep(random.randrange(2, 4))
 
-        # вводим получателя
-        to_input = browser.find_element_by_xpath("/html/body/div[5]/div/div/div[2]/div[1]/div/div[2]/input")
-        to_input.send_keys(username)
-        time.sleep(random.randrange(2, 4))
+        # массовая рассылка сообщения
+        for user in usernames:
+            # вводим получателя
+            to_input = browser.find_element_by_xpath("/html/body/div[5]/div/div/div[2]/div[1]/div/div[2]/input")
+            to_input.send_keys(user)
+            time.sleep(random.randrange(2, 4))
 
-        # Выбираем получателя из списка
-        user_list = browser.find_element_by_xpath("/html/body/div[5]/div/div/div[2]/div[2]/div[1]/div/div[3]/button").click()
-        time.sleep(random.randrange(2, 4))
+            # Выбираем получателя из списка
+            user_list = browser.find_element_by_xpath("/html/body/div[5]/div/div/div[2]/div[2]/div[1]/div/div[3]/button").click()
+            time.sleep(random.randrange(2, 4))
 
         next_button = browser.find_element_by_xpath("/html/body/div[5]/div/div/div[1]/div/div[2]/div/button").click()
         time.sleep(random.randrange(2, 4))
 
-        text_message_area = browser.find_element_by_xpath("/html/body/div[1]/section/div/div[2]/div/div/div[2]/div[2]/div/div[2]/div/div/div[2]/textarea")
-        text_message_area.clear()
-        text_message_area.send_keys(message)
-        time.sleep(random.randrange(2, 4))
-        text_message_area.send_keys(Keys.ENTER)
-        print(f"Сообщение для {username} успешно отправлено!")
+        # отправка текстового сообщения
+        if message:
+            text_message_area = browser.find_element_by_xpath("/html/body/div[1]/section/div/div[2]/div/div/div[2]/div[2]/div/div[2]/div/div/div[2]/textarea")
+            text_message_area.clear()
+            text_message_area.send_keys(message)
+            time.sleep(random.randrange(2, 4))
+            text_message_area.send_keys(Keys.ENTER)
+            print(f"Сообщение для {usernames} успешно отправлено!")
+            time.sleep(random.randrange(2, 6))
+
+        # отправка изображения
+        if img_path:
+            send_img_input = browser.find_element_by_xpath("/html/body/div[1]/section/div/div[2]/div/div/div[2]/div[2]/div/div[2]/div/div/form/input")
+            send_img_input.send_keys(img_path)
+            print(f"Изображение для {usernames} успешно отправлено!")
+            time.sleep(random.randrange(2, 6))
 
         self.close_browser()
 
 my_bot = InstagramBot(username, password)
 my_bot.login()
-#my_bot.send_direct_message("bagnurl_l", "dota2")
+#my_bot.send_direct_message(direct_users_list, "Мария", "C:/Users/77082/Desktop/ione/hi-sexy-43668249.png")
+my_bot.like_photo_by_hashtag("#beauty")
 #my_bot.get_all_followers("https://www.instagram.com/aydynkyzy_kerim/")
 #my_bot.download_userpage_content("https://www.instagram.com/aydynkyzy_kerim/")
