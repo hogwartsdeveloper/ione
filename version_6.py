@@ -58,7 +58,7 @@ class InstagramBot():
             try:
                 browser.get(url)
                 time.sleep(3)
-                like_button = browser.find_element_by_xpath('/html/body/div[5]/div[2]/div/article/div[3]/section[1]/span[1]/button').click()
+                browser.find_element_by_xpath('/html/body/div[5]/div[2]/div/article/div[3]/section[1]/span[1]/button').click()
                 time.sleep(random.randrange(80, 100))
 
             except Exception as ex:
