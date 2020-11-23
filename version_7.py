@@ -1,10 +1,10 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-from auth_data import username, password
-from direct_users import direct_users_list
+from data import users_settings_dict, direct_users_list
 import time
 import random
 from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.chrome.options import Options
 import requests
 import os
 
@@ -14,7 +14,10 @@ class InstagramBot():
 
         self.username = username
         self.password = password
-        self.browser = webdriver.Chrome('chromedriver.exe')
+        options = Options()
+        #options.add_argument(f"--window-size={window_size}")
+        options.add_argument("--headless")
+        self.browser = webdriver.Chrome('chromedriver.exe', options=options)
     
     def close_browser(self):
 
@@ -259,9 +262,16 @@ class InstagramBot():
             print(f"Пользователь {file_name} успешно найден, начинаем скачивать ссылки на подписчиков!")
             time.sleep(2)
 
-            followers_button = browser.find_element_by_xpath("/html/body/div[1]/section/main/div/header/section/ul/li[2]/a")
-            followers_count = followers_button.text
-            followers_count = int(followers_count.split(' ')[0])
+            followers_button = browser.find_element_by_xpath("/html/body/div[1]/section/main/div/header/section/ul/li[2]/a/span")
+            followers_count = followers_button.get_attribute('title')
+            #followers_count = followers_button.text
+            #followers_count = int(followers_count.split(' ')[0])
+
+            # если количество подписчиков больше 999, убираем из числа запятые
+            if ' ' in followers_count:
+                followers_count = int(''.join(followers_count.split()))
+            else:
+                followers_count = int(followers_count)
             print(f"Количество подписчиков: {followers_count}")
             time.sleep(2)
 
@@ -269,7 +279,7 @@ class InstagramBot():
             print(f"Число итераций: {loops_count}")
             time.sleep(4)
 
-            followers_button.click()
+            '''followers_button.click()
             time.sleep(4)
 
             followers_ul = browser.find_element_by_xpath("/html/body/div[5]/div/div/div[2]")
@@ -354,7 +364,7 @@ class InstagramBot():
 
             except Exception as ex:
                 print(ex)
-                self.close_browser()
+                self.close_browser()'''
 
         self.close_browser()
     # метод для отправки сообщений в директ
@@ -414,9 +424,21 @@ class InstagramBot():
 
         self.close_browser()
 
-my_bot = InstagramBot(username, password)
-my_bot.login()
-#my_bot.send_direct_message(direct_users_list, "Мария", "C:/Users/77082/Desktop/ione/hi-sexy-43668249.png")
-my_bot.like_photo_by_hashtag("#beauty")
+for user, user_data in users_settings_dict.items():
+    username = user_data['login']
+    password = user_data['password']
+    window_size = user_data['window_size']
+
+    my_bot = InstagramBot(username, password)
+    my_bot.login()
+    #my_bot.close_browser()
+    #my_bot.send_direct_message(direct_users_list, "Чаман", "C:/Users/77082/Desktop/ione/hi-sexy-43668249.png")
+    my_bot.get_all_followers('https://www.instagram.com/heena_jain028/')
+    time.sleep(random.randrange(4, 8))
+
+#my_bot = InstagramBot(username, password)
+#my_bot.login()
+#my_bot.send_direct_message(direct_users_list, "Чаман", "C:/Users/77082/Desktop/ione/hi-sexy-43668249.png")
+#my_bot.like_photo_by_hashtag("#beauty")
 #my_bot.get_all_followers("https://www.instagram.com/aydynkyzy_kerim/")
 #my_bot.download_userpage_content("https://www.instagram.com/aydynkyzy_kerim/")

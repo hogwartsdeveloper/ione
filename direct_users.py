@@ -1,1 +1,0 @@
-direct_users_list = ['sultanmaksat__', 'morzabaevs', 'gazel_gruz4iki_astana', 'ast.lam', 'z.nails.astana', 'lashesnursultan', 'olx_kazakhstan_astana', 'kuanyshaker']
