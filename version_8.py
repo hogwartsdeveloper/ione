@@ -660,34 +660,28 @@ for user, user_data in users_settings_dict.items():
     #my_bot.close_browser()
     
     # Ставить лайк по хештегу
-    #my_bot.like_photo_by_hashtag("beauty")
+    #my_bot.like_photo_by_hashtag("хаштег")
 
     # Ставить по прямой ссылке
-    #my_bot.put_exactly_like("https://www.instagram.com/p/CE9mm4rgeUJnQ3yr6UNFsKzmnvWEnIY_-ZeCL40/")
+    #my_bot.put_exactly_like("url")
 
     # Метод собирает ссылки на все посты пользователя
-    #my_bot.get_all_posts_urls("https://www.instagram.com/bazilgalam/")
+    #my_bot.get_all_posts_urls("url")
 
     # Ставим лайки по ссылке на аккаунт пользователя
-    #my_bot.put_many_likes("https://www.instagram.com/baiezooov/")
+    #my_bot.put_many_likes("url")
 
     # тод скачивает контент со страницы пользователя
-    #my_bot.download_userpage_content("https://www.instagram.com/kaparova_aizatka/")
+    #my_bot.download_userpage_content("url")
 
     # метод подписки на всех подписчиков переданного аккаунта
-    #my_bot.get_all_followers("https://www.instagram.com/the.best.kalyan.na.dom/")
+    #my_bot.get_all_followers("url")
 
     # метод для отправки сообщений в директ
-    #my_bot.send_direct_message(direct_users_list, "Чаман", "C:/Users/77082/Desktop/ione/hi-sexy-43668249.png")
+    #my_bot.send_direct_message(direct_users_list, "Сообщения", "адрес фото пример C:/Users/77082/Desktop/ione/hi-sexy-43668249.png")
 
     # Метод отписки от всех пользователей
     #my_bot.unsubscribe_for_all_users(username)
 
     # метод отписки, отписываемся от всех кто не подписан на нас
-    #my_bot.smart_unsubscribe(username)
-
-    #my_bot.send_direct_message(direct_users_list, "Чаман", "C:/Users/77082/Desktop/ione/hi-sexy-43668249.png")
-    #my_bot.get_all_followers('https://www.instagram.com/heena_jain028/')
-    #time.sleep(random.randrange(4, 8))
-    #my_bot.unsubscribe_for_all_users("genribauer44")
     #my_bot.smart_unsubscribe(username)
