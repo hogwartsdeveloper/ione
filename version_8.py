@@ -22,11 +22,13 @@ class InstagramBot():
         options.add_argument("--profile-directory=Default")
         self.browser = webdriver.Chrome('chromedriver.exe', options=options)
     
+    # Метод закрытие браузера
     def close_browser(self):
 
         self.browser.close()
         self.browser.quit()
 
+    # Метод логин
     def login(self):
 
         browser = self.browser
@@ -53,9 +55,10 @@ class InstagramBot():
         browser.get(f'https://www.instagram.com/explore/tags/{hashtag}/')
         time.sleep(5)
 
-        
+        # Сколько лайков сколько изменяем вторую цифру из range
         for i in range(1, 4):
             browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+            print(f"Скрол #{i}")
             time.sleep(random.randrange(3, 5))
 
         hrefs = browser.find_elements_by_tag_name('a')
@@ -65,8 +68,16 @@ class InstagramBot():
             try:
                 browser.get(url)
                 time.sleep(3)
-                browser.find_element_by_xpath('/html/body/div[5]/div[2]/div/article/div[3]/section[1]/span[1]/button').click()
-                time.sleep(random.randrange(80, 100))
+                if self.xpath_exists("/html/body/div[5]/div[2]/div/article/div[3]/section[1]/span[1]/button"):
+                    browser.find_element_by_xpath('/html/body/div[5]/div[2]/div/article/div[3]/section[1]/span[1]/button').click()
+                    time.sleep(random.randrange(3, 10))
+                    #time.sleep(random.randrange(80, 100))
+                    print(f"Ставим лайк {url}")
+                elif self.xpath_exists("/html/body/div[1]/section/main/div/div[1]/article/div[3]/section[1]/span[1]/button"):
+                    browser.find_element_by_xpath('/html/body/div[1]/section/main/div/div[1]/article/div[3]/section[1]/span[1]/button').click()
+                    time.sleep(random.randrange(3, 10))
+                    #time.sleep(random.randrange(80, 100))
+                    print(f"Ставим лайк {url}")
 
             except Exception as ex:
                 print(ex)
@@ -282,7 +293,7 @@ class InstagramBot():
             print(f"Число итераций: {loops_count}")
             time.sleep(4)
 
-            '''followers_button.click()
+            followers_button.click()
             time.sleep(4)
 
             followers_ul = browser.find_element_by_xpath("/html/body/div[5]/div/div/div[2]")
@@ -342,13 +353,13 @@ class InstagramBot():
                                 else:
                                     try:
                                         if self.xpath_exists("/html/body/div[1]/section/main/div/header/section/div[1]/div[1]/button"):
-                                            follow_button = browser.find_element_by_xpath("/html/body/div[1]/section/main/div/header/section/div[1]/div[1]/button").click()
+                                            browser.find_element_by_xpath("/html/body/div[1]/section/main/div/header/section/div[1]/div[1]/button").click()
                                             print(f"Подписались на пользователя {page_owner}. Открытый аккаунт!")
                                         elif self.xpath_exists('/html/body/div[1]/section/main/div/header/section/div[2]/div/div/div/div/span/span[1]/button'):
-                                            follow_button = browser.find_element_by_xpath("/html/body/div[1]/section/main/div/header/section/div[2]/div/div/div/div/span/span[1]/button").click()
+                                            browser.find_element_by_xpath("/html/body/div[1]/section/main/div/header/section/div[2]/div/div/div/div/span/span[1]/button").click()
                                             print(f"Подписались на пользователя {page_owner}. Открытый аккаунт!")
                                         else:
-                                            follow_button = browser.find_element_by_xpath("/html/body/div[1]/section/main/div/header/section/div[1]/div[1]/div/div/div/span/span[1]/button").click()
+                                            browser.find_element_by_xpath("/html/body/div[1]/section/main/div/header/section/div[1]/div[1]/div/div/div/span/span[1]/button").click()
                                             print(f"Подписались на пользователя {page_owner}. Открытый аккаунт!")
                                         
 
@@ -367,7 +378,7 @@ class InstagramBot():
 
             except Exception as ex:
                 print(ex)
-                self.close_browser()'''
+                self.close_browser()
 
         self.close_browser()
     # метод для отправки сообщений в директ
@@ -383,7 +394,7 @@ class InstagramBot():
             self.close_browser()
         else:
             print("Отправляем сообщение...")
-            direct_message = browser.find_element_by_xpath(direct_message_button).click()
+            browser.find_element_by_xpath(direct_message_button).click()
             time.sleep(random.randrange(2, 4))
 
         # отключаем всплывающее окно
@@ -391,7 +402,7 @@ class InstagramBot():
             browser.find_element_by_xpath("/html/body/div[5]/div/div/div/div[3]/button[2]").click()
         time.sleep(random.randrange(2, 4))
 
-        send_message_button = browser.find_element_by_xpath("/html/body/div[1]/section/div/div[2]/div/div/div[2]/div/button").click()
+        browser.find_element_by_xpath("/html/body/div[1]/section/div/div[2]/div/div/div[2]/div/button").click()
         time.sleep(random.randrange(2, 4))
 
         # массовая рассылка сообщения
@@ -402,10 +413,10 @@ class InstagramBot():
             time.sleep(random.randrange(2, 4))
 
             # Выбираем получателя из списка
-            user_list = browser.find_element_by_xpath("/html/body/div[5]/div/div/div[2]/div[2]/div[1]/div/div[3]/button").click()
+            browser.find_element_by_xpath("/html/body/div[5]/div/div/div[2]/div[2]/div[1]/div/div[3]/button").click()
             time.sleep(random.randrange(2, 4))
 
-        next_button = browser.find_element_by_xpath("/html/body/div[5]/div/div/div[1]/div/div[2]/div/button").click()
+        browser.find_element_by_xpath("/html/body/div[5]/div/div/div[1]/div/div[2]/div/button").click()
         time.sleep(random.randrange(2, 4))
 
         # отправка текстового сообщения
@@ -481,7 +492,7 @@ class InstagramBot():
 
                 following_button = user.find_element_by_tag_name("button").click()
                 time.sleep(random.randrange(3, 6))
-                unfollow_button = browser.find_element_by_xpath("/html/body/div[6]/div/div/div/div[3]/button[1]").click()
+                browser.find_element_by_xpath("/html/body/div[6]/div/div/div/div[3]/button[1]").click()
 
                 print(f"Итерация #{count} >>> Отписался от пользователя {user_name}")
                 count -= 1
@@ -643,17 +654,40 @@ for user, user_data in users_settings_dict.items():
     window_size = user_data['window_size']
 
     my_bot = InstagramBot(username, password)
+
+    # Авторизация только первый раз после отключить коментарии #
     #my_bot.login()
     #my_bot.close_browser()
+    
+    # Ставить лайк по хештегу
+    #my_bot.like_photo_by_hashtag("beauty")
+
+    # Ставить по прямой ссылке
+    #my_bot.put_exactly_like("https://www.instagram.com/p/CE9mm4rgeUJnQ3yr6UNFsKzmnvWEnIY_-ZeCL40/")
+
+    # Метод собирает ссылки на все посты пользователя
+    #my_bot.get_all_posts_urls("https://www.instagram.com/bazilgalam/")
+
+    # Ставим лайки по ссылке на аккаунт пользователя
+    #my_bot.put_many_likes("https://www.instagram.com/baiezooov/")
+
+    # тод скачивает контент со страницы пользователя
+    #my_bot.download_userpage_content("https://www.instagram.com/kaparova_aizatka/")
+
+    # метод подписки на всех подписчиков переданного аккаунта
+    #my_bot.get_all_followers("https://www.instagram.com/the.best.kalyan.na.dom/")
+
+    # метод для отправки сообщений в директ
+    #my_bot.send_direct_message(direct_users_list, "Чаман", "C:/Users/77082/Desktop/ione/hi-sexy-43668249.png")
+
+    # Метод отписки от всех пользователей
+    #my_bot.unsubscribe_for_all_users(username)
+
+    # метод отписки, отписываемся от всех кто не подписан на нас
+    #my_bot.smart_unsubscribe(username)
+
     #my_bot.send_direct_message(direct_users_list, "Чаман", "C:/Users/77082/Desktop/ione/hi-sexy-43668249.png")
     #my_bot.get_all_followers('https://www.instagram.com/heena_jain028/')
     #time.sleep(random.randrange(4, 8))
     #my_bot.unsubscribe_for_all_users("genribauer44")
-    my_bot.smart_unsubscribe(username)
-
-#my_bot = InstagramBot(username, password)
-#my_bot.login()
-#my_bot.send_direct_message(direct_users_list, "Чаман", "C:/Users/77082/Desktop/ione/hi-sexy-43668249.png")
-#my_bot.like_photo_by_hashtag("#beauty")
-#my_bot.get_all_followers("https://www.instagram.com/aydynkyzy_kerim/")
-#my_bot.download_userpage_content("https://www.instagram.com/aydynkyzy_kerim/")
+    #my_bot.smart_unsubscribe(username)
